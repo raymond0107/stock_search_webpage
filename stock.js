@@ -4,7 +4,7 @@ $(document).ready(function() {
     $("#entryName").autocomplete({
         source: function(request, response) {
             $.ajax({
-                url: "hw8.php",
+                url: "stock.php",
                 dataType: "json",
                 type: "GET",
                 data: {
@@ -60,7 +60,7 @@ function check(input) {
 
     var hasMatch = false;
     $.ajax({
-        url: "hw8.php",
+        url: "stock.php",
         dataType: "json",
         type: "GET",
         data: {
@@ -100,7 +100,7 @@ function check(input) {
 
 function getStockInfo(s) {
     $.ajax({
-        url: "hw8.php",
+        url: "stock.php",
         dataType: "json",
         type: "GET",
         data: {
@@ -116,16 +116,16 @@ function getStockInfo(s) {
                 var url_change = "";
                 var url_changeytd = "";
                 if (data["Change"] > 0) {
-                    url_change = "http://cs-server.usc.edu:45678/hw/hw8/images/up.png";
+                    url_change = "http://cs-server.usc.edu:45678/hw/stock/images/up.png";
                 }
                 else {
-                    url_change = "http://cs-server.usc.edu:45678/hw/hw8/images/down.png";
+                    url_change = "http://cs-server.usc.edu:45678/hw/stock/images/down.png";
                 }
                 if (data["ChangePercentYTD"] > 0) {
-                    url_changeytd = "http://cs-server.usc.edu:45678/hw/hw8/images/up.png";
+                    url_changeytd = "http://cs-server.usc.edu:45678/hw/stock/images/up.png";
                 } 
                 else {
-                    url_changeytd = "http://cs-server.usc.edu:45678/hw/hw8/images/down.png";
+                    url_changeytd = "http://cs-server.usc.edu:45678/hw/stock/images/down.png";
                 }
                 var color = data['changePercent'] > 0? 'green':'red';
                 var content = "<tr><td>Name</td><td id='name'>"+data["Name"]+"</td></tr>"
@@ -153,7 +153,7 @@ function getStockInfo(s) {
 
 function getStockNews(s) {
     $.ajax({
-        url: "hw8.php",
+        url: "stock.php",
         dataType: "json",
         type: "GET",
         data: {
@@ -193,7 +193,7 @@ function getStockChart(s) {
     //$("#chartDemoContainer").append(s);
     $('#chartDemoContainer').empty();
     $.ajax({
-        url: "hw8.php",
+        url: "stock.php",
         dataType: "json",
         type: "GET",
         data: {
@@ -225,7 +225,7 @@ function addFavorRow(data) {
     var change = Number(data["Change"]).toFixed(2);
     var changePercent = Number(data["ChangePercent"]).toFixed(2);
     var color = changePercent > 0? 'green':'red';
-    var img = changePercent > 0? 'http://cs-server.usc.edu:45678/hw/hw8/images/up.png':'http://cs-server.usc.edu:45678/hw/hw8/images/down.png';
+    var img = changePercent > 0? 'http://cs-server.usc.edu:45678/hw/stock/images/up.png':'http://cs-server.usc.edu:45678/hw/stock/images/down.png';
     content += '<td id="'+data['Symbol']+'_refresh" style="color:'+color+'"><span>'+change+' ( '+changePercent+'% )</span> '+'<img src="'+img+'">'+'</td>';
 
     var marketCapNum = data["MarketCap"];
@@ -253,7 +253,7 @@ function createFavoriteTable() {
         var s = localStorage.getItem(localStorage.key(i));
         //alert(s);
         $.ajax({
-            url: "hw8.php",
+            url: "stock.php",
             dataType: "json",
             type: "GET",
             data: {
@@ -277,7 +277,7 @@ function createFavoriteTable() {
 function makeFavoriteList() {
     var s = $('#symbol').text();
     $.ajax({
-        url: "hw8.php",
+        url: "stock.php",
         dataType: "json",
         type: "GET",
         data: {
@@ -456,7 +456,7 @@ function refresh() {
     for(var i = 0;i < localStorage.length;i++) {     
         var s = localStorage.getItem(localStorage.key(i));
         $.ajax({
-            url: "hw8.php",
+            url: "stock.php",
             dataType: "json",
             type: "GET",
             data: {
@@ -467,7 +467,7 @@ function refresh() {
                 var change = Number(data["Change"]).toFixed(2);
                 var changePercent = Number(data["ChangePercent"]).toFixed(2);
                 var color = changePercent > 0? 'green':'red';
-                var img = changePercent > 0? 'http://cs-server.usc.edu:45678/hw/hw8/images/up.png':'http://cs-server.usc.edu:45678/hw/hw8/images/down.png';
+                var img = changePercent > 0? 'http://cs-server.usc.edu:45678/hw/stock/images/up.png':'http://cs-server.usc.edu:45678/hw/stock/images/down.png';
                 var Num = data["MarketCap"];
                 var marketCap ='';
                 if(Num > 1000000000) {
@@ -517,7 +517,7 @@ window.fbAsyncInit = function() {
 function fb_feeds(obj) {
     FB.ui({
         method: 'feed',
-        link: 'http://cs571hw8lz-env.us-west-2.elasticbeanstalk.com/',
+        link: 'http://cs571stocklz-env.us-west-2.elasticbeanstalk.com/',
         picture: 'http://chart.finance.yahoo.com/t?s='+$("#symbol").text()+'&lang=en-US&width=400&height=300',
         name: '“Current Stock Price of '+$("#name").text()+' is '+$("#price").text(),
         caption: 'Last Traded Price: '+$("#price").text()+',  CHANGE:'+$("#change").text(),
